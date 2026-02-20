@@ -1,4 +1,4 @@
-console.log("Node JS Lab Started");
+// console.log("Node JS Lab Started");
 
 //read file using fs module
 // const fs = require('fs');
@@ -17,10 +17,28 @@ console.log("Node JS Lab Started");
 // });
 
 //Web Server
-const http = require('http');
+// const http = require('http');
 
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.write('Hello World!');
-  res.end();
-}).listen(8080);
+// http.createServer(function (req, res) {
+//   res.writeHead(200, {'Content-Type': 'text/html'});
+//   res.write('Hello World!');
+//   res.end();
+// }).listen(8080);
+
+//Http Request
+const https = require('https');
+
+https.get('https://jsonplaceholder.typicode.com/posts/1', (resp) => {
+  let data = '';
+
+  resp.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  resp.on('end', () => {
+    console.log(JSON.parse(data));
+  });
+
+}).on('error', (err) => {
+  console.log("Error: " + err.message);
+});
